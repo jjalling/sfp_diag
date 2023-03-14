@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
     std::cout << "Wavelength: " << __builtin_bswap16(info.wavelength) << " [nm]" << std::endl;
 
     std::cout << std::fixed << std::setprecision(2);
-    std::cout << "Temperature: " << __builtin_bswap16(diag.Temperature)*(1.0/256) << " [C]" << std::endl;
+    std::cout << "Temperature: " << (int16_t)__builtin_bswap16(diag.Temperature)*(1.0/256) << " [C]" << std::endl;
     std::cout << "Voltage: " << __builtin_bswap16(diag.voltage) / 10000.0 << " [V]" << std::endl;
     std::cout << "TX Bias current: " << (__builtin_bswap16(diag.tx_bias) / 1000.0) << " [mA]" << std::endl;
     std::cout << "TX Power: " << 10 * log10(__builtin_bswap16(diag.tx_power) / 10000.0) << " [dBm]" << std::endl;

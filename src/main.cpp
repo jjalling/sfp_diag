@@ -81,6 +81,7 @@ int main(int argc, char *argv[])
     std::string serial(info.serial,16);
     std::string date(info.date,8);
 
+#if 0
     std::cout << "Vendor: " << vendor << std::endl;
     std::cout << "Part number: " << pn << std::endl;
     std::cout << "Serial number: " << serial << std::endl;
@@ -94,7 +95,21 @@ int main(int argc, char *argv[])
     std::cout << "TX Bias current: " << (__builtin_bswap16(diag.tx_bias) / 1000.0) << " [mA]" << std::endl;
     std::cout << "TX Power: " << 10 * log10(__builtin_bswap16(diag.tx_power) / 10000.0) << " [dBm]" << std::endl;
     std::cout << "RX Power (avg.): " << 10 * log10(__builtin_bswap16(diag.rx_power_avg) / 10000.0) << " [dBm]" << std::endl;
+#else
+    std::cout << "\"Vendor\";" << vendor << std::endl;
+    std::cout << "\"Part number\";" << pn << std::endl;
+    std::cout << "\"Serial number\";" << serial << std::endl;
+    std::cout << "\"Date code\";" << date << std::endl;
+    std::cout << "\"Nominal speed\";" << (int)info.signal_rate*100 << ";Mbps" << std::endl;
+    std::cout << "\"Wavelength\";" << __builtin_bswap16(info.wavelength) << ";nm" << std::endl;
 
+    std::cout << std::fixed << std::setprecision(2);
+    std::cout << "\"Temperature\";" << (int16_t)__builtin_bswap16(diag.Temperature)*(1.0/256) << ";C" << std::endl;
+    std::cout << "\"Voltage\";" << __builtin_bswap16(diag.voltage) / 10000.0 << ";V" << std::endl;
+    std::cout << "\"TX Bias current\";" << (__builtin_bswap16(diag.tx_bias) / 1000.0) << ";mA" << std::endl;
+    std::cout << "\"TX Power\";" << 10 * log10(__builtin_bswap16(diag.tx_power) / 10000.0) << ";dBm" << std::endl;
+    std::cout << "\"RX Power (avg.)\";" << 10 * log10(__builtin_bswap16(diag.rx_power_avg) / 10000.0) << ";dBm" << std::endl;
+#endif
     return 0;
 }
 
